@@ -49,42 +49,46 @@ The first step to protecting applications is to gain and maintain comprehensive 
 
 Prisma Cloud supports a massive amount of compute types, to review the supported systems check out our public documentation. (https://docs.paloaltonetworks.com/prisma/prisma-cloud/prisma-cloud-admin-compute/install/system_requirements)
 
-Let's help Exampli Corp get a clear picture of the application running on the vulnerable GKE cluster from the previous section. Start by taking a look at the microservices running the Bank of Anthos application using Prisma Cloud’s Radar feature.
+Let's help Exampli Corp get a clear picture of the application running on their vulnerable GKE cluster. Start by taking a look at the microservices running the Bank of Anthos application using Prisma Cloud’s Radar feature.
 
-1. The Radars feature lets you gain a bird’s eye view to monitor and understand your cloud applications. It helps you visualize the connectivity between microservices and search for vulnerabilities. Use the dropdown window in the upper left corner to select the **Runtime Security** focus and select **Containers** under the **Radars** section. Select the cluster **bank-of-anthos**.
+1. Login to [Prisma Cloud](https://app3.prismacloud.io/login).
+
+2. Use the credentials provided by your Instructor to authenticate.
+
+3. The Radars feature lets you gain a bird’s eye view to monitor and understand your cloud applications. It helps you visualize the connectivity between microservices and search for vulnerabilities. Use the dropdown window in the upper left corner to select the **Runtime Security** focus and select **Containers** under the **Radars** section. Select the cluster **bank-of-anthos**.
 
 ![Alt text for image](/screenshots/runtime_protection/maintaining-visibility-1.png "Optional title")
 
-2. Once you have selected the correct cluster your screen should look similar to the screenshot below:
+4. Once you have selected the correct cluster your screen should look similar to the screenshot below:
 
 ![Alt text for image](/screenshots/runtime_protection/maintaining-visibility-2.png "Optional title")
 
-3. Radar provides a visual depiction of the connections between containers, apps, and cluster services across your environment. Take some time to play around with the Radar feature and think through the following questions:
+5. Radar provides a visual depiction of the connections between containers, apps, and cluster services across your environment. Take some time to play around with the Radar feature and think through the following questions:
 
 **What type of information can you learn by clicking on the nodes?
 How does this visibility help you protect your applications?**
 
-4. Let’s dive deeper into the **frontend:v0.5.5** microservice. Click on the associated container. Your screen should look similar to the screenshot below:
+6. Let’s dive deeper into the **frontend:v0.5.5** microservice. Click on the associated container. Your screen should look similar to the screenshot below:
 
 ![Alt text for image](/screenshots/runtime_protection/preventing-attacks-3-v2.png "Optional title")
 
-5. Take some time to review the **Vulnerabilities** page.
+7. Take some time to review the **Vulnerabilities** page.
 
 ![Alt text for image](/screenshots/runtime_protection/preventing-attacks-4.png "Optional title")
 
-6. Of the identified OS vulnerabilities, which one has the highest CVE? Do all the identified vulnerabilities contain a fix?
+8. Of the identified OS vulnerabilities, which one has the highest CVE? Do all the identified vulnerabilities contain a fix?
 
-7. Take a look at the **Layers** tab to view the dockerfile that built this image and find where vulnerabilities were introduced.
+9. Take a look at the **Layers** tab to view the dockerfile that built this image and find where vulnerabilities were introduced.
 
 ![Alt text for image](/screenshots/runtime_protection/preventing-attacks-6.png "Optional title")
 
-8. Find the file that added the most severe vulnerabilities and open it up by clicking on it to learn more about specifically what CVEs were added. Your screen should look similar to the screen capture below :
+10. Find the file that added the most severe vulnerabilities and open it up by clicking on it to learn more about specifically what CVEs were added. Your screen should look similar to the screen capture below :
 
 ![openssl-1](https://github.com/c-haisten/c2c_summit/assets/98335592/7d522d07-18c8-4ce0-afe2-4d12cb44d370)
 
 **We can see that this particular file introduced a ton of vulnerabilities including the usage of openssl version 1.1 which is susceptable to a number of malicious exploits.** 
 
-9. Now that we have established some understanding of this container and have found some CVE's lets expand our knowledge by observing this workload's behavior using Prisma Cloud's forensic modeling capabilities. Click the back arrow at the top right hand side of the UI and arrive back at the container summary view. Your screen should look similar to the screen capture below :
+11. Now that we have established some understanding of this container and have found some CVE's lets expand our knowledge by observing this workload's behavior using Prisma Cloud's forensic modeling capabilities. Click the back arrow at the top right hand side of the UI and arrive back at the container summary view. Your screen should look similar to the screen capture below :
 
 ![Alt text for image](/screenshots/runtime_protection/preventing-attacks-3-v2.png "Optional title")
 
