@@ -48,59 +48,63 @@ Cloud-native applications allow organizations to build and run scalable applicat
 
 In this section, you will explore some use cases for securing GKE resources and services.
 
-1. Let's start with taking a look at the **Asset Inventory** page to get an idea of the scale of resources that are being monitored by this particular Prisma Cloud tenant.
+1. Login to [Prisma Cloud](https://app3.prismacloud.io/login).
 
-2. Begin by clicking on the **Inventory** tab at the top and click on **Assets**.
+2. Use the credentials provided by your Instructor to authenticate.
+
+3. Let's start with taking a look at the **Asset Inventory** page to get an idea of the scale of resources that are being monitored by this particular Prisma Cloud tenant.
+
+4. Begin by clicking on the **Inventory** tab at the top and click on **Assets**.
 
 ![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-2.png "Optional title")
 
-3. The **Asset Inventory** can be a helpful place to get a high level view on cloud assets and their compliance with defined policies. Without constant visibility of what is being deployed in your cloud footprint, you cannot begin to secure it.
+5. The **Asset Inventory** can be a helpful place to get a high level view on cloud assets and their compliance with defined policies. Without constant visibility of what is being deployed in your cloud footprint, you cannot begin to secure it.
 
-4. Your screen should look similar to the one below:
+6. Your screen should look similar to the one below:
 
 ![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-4.png "Optional title")
 
-5. We know the Exampli Corp team is using Kubernetes. Let's investigate further by clicking on **GCP** under the **Cloud** column. Here we can see all GCP services in use.
+7. We know the Exampli Corp team is using Kubernetes. Let's investigate further by clicking on **GCP** under the **Cloud** column. Here we can see all GCP services in use.
 
 ![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-5.png "Optional title")
 
-6. We can see several issues associated with **Google Compute Engine**. Click on this service name to drill down further. On the next page we can see issues associated with **Google Compute Engine VM Instance**. Click on the Total assets to investigate.
+8. We can see several issues associated with **Google Compute Engine**. Click on this service name to drill down further. On the next page we can see issues associated with **Google Compute Engine VM Instance**. Click on the Total assets to investigate.
 
 ![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-6.png "Optional title")
 
-7. Click on the **gke-bank-of-anthos-default-pool-681c740d-ob6o** Asset Name. A side panel will open on the right side to quickly see an Overview, Attack Paths, Alerts, Vulnerabilities and more for this GKE cluster.
+9. Click on the **gke-bank-of-anthos-default-pool-681c740d-ob6o** Asset Name. A side panel will open on the right side to quickly see an Overview, Attack Paths, Alerts, Vulnerabilities and more for this GKE cluster.
 
 ![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-7.png "Optional title")
 
-8. Let's take a look at the raw config for this resource by clicking on the **View Config** button
+10. Let's take a look at the raw config for this resource by clicking on the **View Config** button
 
 ![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-8.png "Optional title")
 
-9. Here we can see the raw configuration for this GKE cluster.
+11. Here we can see the raw configuration for this GKE cluster.
 
 ![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-9.png "Optional title")
 
-10. To learn more let's investigate the findings associated with this GKE cluster. Close out the resource config and click on the **Attack Paths** tab.
+12. To learn more let's investigate the findings associated with this GKE cluster. Close out the resource config and click on the **Attack Paths** tab.
 
 ![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-10.png "Optional title")
 
-11. Note the **Findings Types** and see how they correlate with the Attack Path graph. Click on the **Internet Exposure** icon within the graph. Here we can see all the services associated with the host that make it vulnerable to outside attacks.
+13. Note the **Findings Types** and see how they correlate with the Attack Path graph. Click on the **Internet Exposure** icon within the graph. Here we can see all the services associated with the host that make it vulnerable to outside attacks.
 
 ![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-11.png "Optional title")
 
-12. Pan over to the right of the Attack Path graph and click on the **Privilege Escalation** icon within the graph. Here we can see that elevated privileges are assigned to the host. An adversary can destroy sensitive information stored in the cloud resources, making irreversible damage to Exampli's organization.
+14. Pan over to the right of the Attack Path graph and click on the **Privilege Escalation** icon within the graph. Here we can see that elevated privileges are assigned to the host. An adversary can destroy sensitive information stored in the cloud resources, making irreversible damage to Exampli's organization.
 
 ![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-12.png "Optional title")
 
-13. Let's revisit the Internet Exposure finding by reviewing the associated alert and finding out the proper remediation. Click on the **Alerts** tab.
+15. Let's revisit the Internet Exposure finding by reviewing the associated alert and finding out the proper remediation. Click on the **Alerts** tab.
 
 ![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-13.png "Optional title")
 
-14. Next, click on the Alerts ID for the **GCP VM instance that is internet reachable with unrestricted access (0.0.0.0/0)** policy. Here we can see an Overview as well as a Recommendation to resolve the issue.
+16. Next, click on the Alerts ID for the **GCP VM instance that is internet reachable with unrestricted access (0.0.0.0/0)** policy. Here we can see an Overview as well as a Recommendation to resolve the issue.
 
 ![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-14.png "Optional title")
 
-15. Click on the **Recommendation** tab. Here we can see the necessary steps to fix the exposed asset. 
+17. Click on the **Recommendation** tab. Here we can see the necessary steps to fix the exposed asset. 
 
 ![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-15.png "Optional title")
 
