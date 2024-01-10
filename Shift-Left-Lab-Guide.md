@@ -148,101 +148,81 @@ Fortunately, Prisma Cloud makes it easy for anyone to quickly determine how the 
 
 **We recommend you protect access keys and keep them private. Specifically, do not store hard coded keys and secrets in infrastructure such as code, or other version-controlled configuration settings.**
 
-#### Cloud Security Posture Management
+### Software Composition Analysis:
 
-Cloud-native applications allow organizations to build and run scalable applications with great agility and resilience. However, they also present unique security challenges. Ensuring applications and services are secure at runtime is a core responsibility for security teams. CSPM tools can reduce the burden on cloud security teams by automating routine security monitoring, audits and remediations, allowing security teams to focus on high-priority items and prevent configuration drift. 
+1. While in the **Projects** view, click on the **Vulnerabilities** tab and ensure that you select the **c-haisten/bank-of-anthos** repository in the Repositories filter.
 
-In this section, you will explore some use cases for securing GKE resources and services.
+![Alt text for image](/screenshots/runtime_protection/software-composition-analysis-5.png "Optional title")
 
-1. Let's start with taking a look at the **Asset Inventory** page to get an idea of the scale of resources that are being monitored by this particular Prisma Cloud tenant.
+2. Once you have selected the correct repository, it will show you all the security incidents found in the code of that branch. Let’s check to see if there are any serious vulnerabilities by filtering **Severities -> High.**
 
-2. Begin by clicking on the **Inventory** tab at the top and click on **Assets**.
+![Alt text for image](/screenshots/runtime_protection/software-composition-analysis-6.png "Optional title")
 
-![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-2.png "Optional title")
+3. Next, we will select a CVE ID to investigate the vulnerability and determine what next steps to take. Prisma Cloud gives us several options for how to interact with the vulnerability.
 
-3. The **Asset Inventory** can be a helpful place to get a high level view on cloud assets and their compliance with defined policies. Without constant visibility of what is being deployed in your cloud footprint, you cannot begin to secure it.
+Administrators can click suppress, or fix. The suppress button allows you to dismiss all incidents that fall under that specific policy violation. The fix button will allow you to remediate the vulnerability via a bump fix. Here we can see that the vulnerability can be fixed easily by bumping from v1.49.1 to at least v1.53.0.
 
-4. Your screen should look similar to the one below:
+**Suppress and Fix requires increased RBAC that is not available in this lab**
 
-![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-4.png "Optional title")
+4. You can also click the “Details” or “Issues” tab on the right side of the page to get some more information on the dangers of the specific vulnerability.
 
-5. We know the Exampli Corp team is using Kubernetes. Let's investigate further by clicking on **GCP** under the **Cloud** column. Here we can see all GCP services in use.
+![Alt text for image](/screenshots/runtime_protection/software-composition-analysis-8.png "Optional title")
 
-![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-5.png "Optional title")
+5. This CVE has a CVSS score of 7. It makes Exampli Corp’s Bank of Anthos app vulnerable to information leaks and privilege escalation. 
 
-6. We can see several issues associated with **Google Compute Engine**. Click on this service name to drill down further. On the next page we can see issues associated with **Google Compute Engine VM Instance**. Click on the Total assets to investigate.
+On this page Exampli Corp developers can gain context on the CVE and click on the link to NIST providing them with all the details and documentation regarding the vulnerability.
 
-![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-6.png "Optional title")
+Now that we have found some vulnerabilities and secrets violations in our Application code, let's take a look at how Prisma Cloud can give us visibility to the package manager files that comprise applications by taking a look at the Software Bill of Materials (SBOM).
 
-7. Click on the **gke-bank-of-anthos-default-pool-681c740d-ob6o** Asset Name. A side panel will open on the right side to quickly see an Overview, Attack Paths, Alerts, Vulnerabilities and more for this GKE cluster.
+### Software Bill of Materials
 
-![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-7.png "Optional title")
+1. While in the **Application Security** view, use the navigation pane on the left side and click **SBOM** under the **Visibility** section and ensure that you select the **c-haisten/bank-of-anthos** repository in the Repositories filter.
 
-8. Let's take a look at the raw config for this resource by clicking on the **View Config** button
+![Alt text for image](/screenshots/runtime_protection/software-bill-of-materials-1.png "Optional title")
 
-![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-8.png "Optional title")
+2. Next, use the search bar on the right side to search for **crypto**.
 
-9. Here we can see the raw configuration for this GKE cluster.
+![Alt text for image](/screenshots/runtime_protection/software-bill-of-materials-2.png "Optional title")
 
-![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-9.png "Optional title")
+3. Click on the **cryptography** package to see additional information such as version, license type and vulnerabilities. 
 
-10. To learn more let's investigate the findings associated with this GKE cluster. Close out the resource config and click on the **Attack Paths** tab.
+![Alt text for image](/screenshots/runtime_protection/software-bill-of-materials-3.png "Optional title")
 
-![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-10.png "Optional title")
+4. Next, take a deeper look at the cryptography package file by looking at the **Issues** and **Repositories** tabs.
 
-11. Note the **Findings Types** and see how they correlate with the Attack Path graph. Click on the **Internet Exposure** icon within the graph. Here we can see all the services associated with the host that make it vulnerable to outside attacks.
+![Alt text for image](/screenshots/runtime_protection/software-bill-of-materials-4a.png "Optional title")
 
-![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-11.png "Optional title")
+![Alt text for image](/screenshots/runtime_protection/software-bill-of-materials-4b.png "Optional title")
 
-12. Pan over to the right of the Attack Path graph and click on the **Privilege Escalation** icon within the graph. Here we can see that elevated privileges are assigned to the host. An adversary can destroy sensitive information stored in the cloud resources, making irreversible damage to Exampli's organization.
+5. In the Issues tab, how many vulnerabilities are present in the cryptography package? Use the dropdown window to locate CVE's and read more about them. 
 
-![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-12.png "Optional title")
+![Alt text for image](/screenshots/runtime_protection/software-bill-of-materials-5.png "Optional title")
 
-13. Let's revisit the Internet Exposure finding by reviewing the associated alert and finding out the proper remediation. Click on the **Alerts** tab.
+6. Use the Repositories tab to discover which file is introducing the vulnerable software package. How many repos are impacted? Is it in the same location or multiple?
 
-![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-13.png "Optional title")
+## CI/CD Risks and Visibility
 
-14. Next, click on the Alerts ID for the **GCP VM instance that is internet reachable with unrestricted access (0.0.0.0/0)** policy. Here we can see an Overview as well as a Recommendation to resolve the issue.
+CI/CD pipelines streamline application coding, testing and deployment through continuous integration and delivery. CI/CD has many benefits when it comes to operationalizing application workflows, but with this advancement in application developments comes risks. That's why it's important to have security In, Of and Around the pipeline. Let's look at a couple examples of how Prisma Cloud can protect pipelines. 
 
-![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-14.png "Optional title")
+1. While in the **Application Security** view, use the navigation pane on the left side and click **Technologies** under the **Visibility** section. Click on the **Pipeline Tools** tab to see what technologies are present in the pipelines monitored by Prisma Cloud. 
 
-15. Click on the **Recommendation** tab. Here we can see the necessary steps to fix the exposed asset. 
+![Alt text for image](/screenshots/shift_left/cicd-risks-visibility-1.png "Optional title")
 
-![Alt text for image](/screenshots/shift_left/cloud-security-posture-management-15.png "Optional title")
+2. Here we can see a nice overview of all technologies present with insights, descriptions and the associated vendor. Click on the **Python** Tool Name to open the side panel window. Here we can gather further information like details of the tool, which pipelines are leveraging the tool and how it's being used.
 
-In addition to the asset inventory and leading cloud management capabilities, Prisma Cloud makes compliance incredibly easy. Let's move on to the next exercise on compliance.
+![Alt text for image](/screenshots/shift_left/cicd-risks-visibility-2.png "Optional title")
 
-#### Compliance in the Cloud
+3. Exit out of the side panel window and click on **CI/CD Risks** under the **CI/CD** section. Here we have a nice visual breakdown of all risks associated with our pipelines.
 
-Many organizations struggle maintaining a grasp on compliance in the cloud. So far we have inspected Exampli's IaC and found some troubling trends. Additionally, at runtime many assets are still vulnerable due to risky configurations and careless development practices.
+![Alt text for image](/screenshots/shift_left/cicd-risks-visibility-3.png "Optional title")
 
-With multiple upcoming compliance audits bearing down on Exampli's CISO's calendar it's time to begin reporting on what is in a failed state and what needs to be done to get the organization's cloud footprint compliant.
+4. Click on the **Excessive user permissions to a repository** Risk Name. A side panel window will open with an overview showing risk location in the delivery chain, details and steps to solve.
 
-1. Start by clicking the **Compliance** tab at the top of the UI. This page provides a high level view of all the unique assets and their associated adherence to various compliance frameworks and policies. When Prisma Cloud detects a violation of a policy it generates an alert.
+![Alt text for image](/screenshots/shift_left/cicd-risks-visibility-4.png "Optional title")
 
-![Alt text for image](/screenshots/shift_left/compliance-in-the-cloud-1.png "Optional title")
+5. Click on the **Open Events** tab to see all open events associated with a particular risk. From here security teams can pinpoint exactly where the risk is being introduced and resolve the issue. 
 
-2. Leverage the filters to adjust the results and select **GCP** for the **Cloud Type**. Refine the filters even more and select the compliance framework **CIS v1.1.0 (GCP)**.
-
-![Alt text for image](/screenshots/shift_left/compliance-in-the-cloud-2.png "Optional title")
-
-3. Click on the Compliance Standard Name from the results to see which services have policies applied for that standard. Prisma Cloud provides a nice breakdown of each service type for easy referencing. 
-
-![Alt text for image](/screenshots/shift_left/compliance-in-the-cloud-3.png "Optional title")
-
-4. This provides a focused view of Exampli's GCP footprint and its adherence to this CIS Standard.
-
-It looks like the **Networking** service has a policy failure. Click on the red "i" icon under the **Failed** column. This will give us a view of the assets associated with the CIS policy failure. Your screen should look similar to the screen capture below :
-
-![Alt text for image](/screenshots/shift_left/compliance-in-the-cloud-4.png "Optional title")
-
-5. Click on the **Alert ID** associated with the **default** Asset name. A side window opens that provides an Overview, Recommendation, Asset Config and Alert Rules. Additionally, the alert can be sent to a third party integration, like JIRA, for automated ticket creation. Reports can also be generated so you'll be ready for the next assessment and audit. 
-
-![Alt text for image](/screenshots/shift_left/compliance-in-the-cloud-5a.png "Optional title")
-
-![Alt text for image](/screenshots/shift_left/compliance-in-the-cloud-5b.png "Optional title")
-
-In this lab we covered various topics around IaC security and CSPM but there are many additional features and capabilities within Prisma Cloud. Feel free to explore the UI and investigate different asset types.
+![Alt text for image](/screenshots/shift_left/cicd-risks-visibility-5.png "Optional title")
 
 ## Summary \ Resources
 
