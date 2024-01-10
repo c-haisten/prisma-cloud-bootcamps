@@ -3,7 +3,7 @@
 
 ### Lab Introduction
 
-Thank you for joining today’s Runtime Protection camp. The lab will focus on application security throughout the software development lifecycle. Before we begin the lab let's start with a brief overview of the lab scenario to help frame the context.
+Thank you for joining today’s Runtime Protection camp. The lab will focus on application security within the software development lifecycle. Before we begin the lab let's start with a brief overview of the lab scenario to help frame the context.
 
 ### Scenario
 
@@ -37,92 +37,9 @@ Bank of Anthos Application:
 
 In this lab there is a mock banking application that is used as the application the Exampli Corp is building. To learn more about the project and its contributors visit the link below:
 
-
 - https://github.com/GoogleCloudPlatform/bank-of-anthos
 
 
-### Exercise
-
-Let's begin by exploring the power of shifting security left with Infrastructure as code scanning. As infrastructure is being defined as code security must be integrated with the tools developers use. In this exercise, we will take a look at some IaC templates within Exampli Corp’s repository.
-
-### Software Composition Analysis:
-
-
-1. Login to [Prisma Cloud](https://app3.prismacloud.io/login).
-
-2. Use the credentials provided by your Instructor to authenticate.
-
-3. Use the dropdown window in the upper left corner to select the three different security focuses within Prisma Cloud. Select **Application Security**.
-
-![Alt text for image](/screenshots/runtime_protection/software-composition-analysis-3.png "Optional title")
-
-4. Next, use the navigation pane on the left to select **Projects** under the **Code** section.
-
-![Alt text for image](/screenshots/runtime_protection/software-composition-analysis-4.png "Optional title")
-
-5. Ensure that you select the **c-haisten/bank-of-anthos** repository in the Repositories filter.
-
-![Alt text for image](/screenshots/runtime_protection/software-composition-analysis-5.png "Optional title")
-
-6. Once you have selected the correct repository, it will show you all the security incidents found in the code of that branch. Let’s check to see if there are any serious vulnerabilities by filtering **Severities -> High.**
-
-![Alt text for image](/screenshots/runtime_protection/software-composition-analysis-6.png "Optional title")
-
-7. Next, we will select a CVE ID to investigate the vulnerability and determine what next steps to take. Prisma Cloud gives us several options for how to interact with the vulnerability.
-
-Administrators can click suppress, or fix. The suppress button allows you to dismiss all incidents that fall under that specific policy violation. The fix button will allow you to remediate the vulnerability via a bump fix. Here we can see that the vulnerability can be fixed easily by bumping from v1.49.1 to at least v1.53.0.
-
-**Suppress and Fix requires increased RBAC that is not available in this lab**
-
-8. You can also click the “Details” or “Issues” tab on the right side of the page to get some more information on the dangers of the specific vulnerability.
-
-![Alt text for image](/screenshots/runtime_protection/software-composition-analysis-8.png "Optional title")
-
-9. This CVE has a CVSS score of 7. It makes Exampli Corp’s Bank of Anthos app vulnerable to information leaks and privilege escalation. 
-
-On this page Exampli Corp developers can gain context on the CVE and click on the link to NIST providing them with all the details and documentation regarding the vulnerability.
-
-10. In Prisma Cloud, secrets are scanned in parallel to vulnerability scanning. This means that Exampli Corp developers can make sure any exposed and vulnerable secrets are detected and remediated. Reset the filters and select **Code Categories -> Secrets** to see if there are any secrets issues in the Bank of Anthos Repo.
-
-![Alt text for image](/screenshots/runtime_protection/software-composition-analysis-10.png "Optional title")
-
-11. Now, let's scroll down and look at some of the secrets issues identified by Prisma Cloud.
-
-![Alt text for image](/screenshots/runtime_protection/software-composition-analysis-11.png "Optional title")
-
-12. By Clicking on the file, Prisma Cloud provides developers with critical information and identifies each secrets violation as a single error.
-
-![Alt text for image](/screenshots/runtime_protection/software-composition-analysis-12.png "Optional title")
-
-Now that we have found some vulnerabilities and secrets violations in our Application code, let's take a look at how Prisma Cloud can give us visibility to the package manager files that comprise applications by taking a look at the Software Bill of Materials (SBOM).
-
-### Software Bill of Materials
-
-1. While in the **Application Security** view, use the navigation pane on the left side and click **SBOM** under the **Visibility** section.
-
-![Alt text for image](/screenshots/runtime_protection/software-bill-of-materials-1.png "Optional title")
-
-2. Next, use the search bar on the right side to search for **crypto**.
-
-![Alt text for image](/screenshots/runtime_protection/software-bill-of-materials-2.png "Optional title")
-
-3. Click on the **cryptography** package to see additional information such as version, license type and vulnerabilities. 
-
-![Alt text for image](/screenshots/runtime_protection/software-bill-of-materials-3.png "Optional title")
-
-4. Next, take a deeper look at the cryptography package file by looking at the **Issues** and **Repositories** tabs.
-
-![Alt text for image](/screenshots/runtime_protection/software-bill-of-materials-4a.png "Optional title")
-
-![Alt text for image](/screenshots/runtime_protection/software-bill-of-materials-4b.png "Optional title")
-
-5. In the Issues tab, how many vulnerabilities are present in the cryptography package? Use the dropdown window to locate CVE's and read more about them. 
-
-![Alt text for image](/screenshots/runtime_protection/software-bill-of-materials-5.png "Optional title")
-
-6. Use the Repositories tab to discover which file is introducing the vulnerable software package. How many repos are impacted? Is it in the same location or multiple?
-
-Now that you have helped to protect the Bank of Anthos banking app by investigating the SBOM, let’s take a look at the recent activity of the Exampli Corp developers.
 
 ### Protect Critical Applications
 
