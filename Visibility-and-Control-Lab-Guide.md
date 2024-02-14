@@ -65,7 +65,7 @@ In this section you will explore how Prisma Cloud can help security teams invent
 
 7. Begin by clicking on **AWS** under the **Cloud** column.
 
-!(/screenshots/v-and-c/Screenshot 2024-02-13 at 2.52.38 PM.png)
+![](/screenshots/v-and-c/Screenshot 2024-02-13 at 2.52.38 PM.png)
 
 8. Here you will see a list of all discovered AWS cloud services for Exampli Corp. Prisma Cloud inventories the services and displays associated misconfigurations and vulnerabilities.
 
